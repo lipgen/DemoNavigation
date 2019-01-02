@@ -1,6 +1,5 @@
 package com.tumoyakov.demonavigation.presentation.ui.main.fragment
 
-import android.content.DialogInterface
 import android.content.pm.ActivityInfo
 import android.graphics.*
 import android.os.AsyncTask
@@ -10,22 +9,14 @@ import android.util.Log
 import android.view.ViewGroup
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.Toast
-import androidx.annotation.IntegerRes
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.findNavController
-import com.jjoe64.graphview.series.DataPoint
-import com.jjoe64.graphview.series.LineGraphSeries
 import com.tumoyakov.demonavigation.R
 import com.tumoyakov.demonavigation.presentation.viewmodel.main.MainFragmentViewModel
 import com.tumoyakov.demonavigation.presentation.viewmodel.main.MainFragmentViewModelFactory
 import kotlinx.android.synthetic.main.dialog_group_input.*
 import kotlinx.android.synthetic.main.fragment_main.*
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.image
 import org.jetbrains.anko.imageBitmap
 import org.jetbrains.anko.support.v4.act
 
@@ -96,6 +87,7 @@ class MainFragment : Fragment() {
             for(i in 0..9) {
                 trainNeuron(i, result, imageArray)
             }
+            setTrainBtnsVisibility(false)
         }
 
         btnTrainWrong.setOnClickListener {
@@ -111,8 +103,9 @@ class MainFragment : Fragment() {
             }
             val trainDialog = builder.create()
             trainDialog.show()
-            trainDialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener {
-                if(etRightGroup.text.isNotBlank()) {
+            trainDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
+                val etGroup = trainDialog.etRightGroup
+                if(etGroup.text.isNotEmpty()) {
                     val rightGroup = etGroup.text.toString().toInt()
                     val imageArray = view.getImageArray()
                     for(i in 0..9) {
